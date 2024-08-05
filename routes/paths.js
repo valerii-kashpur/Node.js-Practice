@@ -1,1 +1,1 @@
-export const PATHS = { contacts: '/api/contacts' };
+export const PATHS = { contacts: '/api/contacts', auth: '/api/auth' };
