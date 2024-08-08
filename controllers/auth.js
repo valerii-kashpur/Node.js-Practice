@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import 'dotenv/config';
 import jwt from 'jsonwebtoken';
+import gravatar from 'gravatar';
 
 import { User } from '../models/user.js';
 import HttpError from '../helpers/HttpError.js';
@@ -18,7 +19,13 @@ export const register = async (req, res) => {
 
 	const hashPassword = await bcrypt.hash(password, HASH_DIFFICULTY);
 
-	const newUser = await User.create({ ...req.body, password: hashPassword });
+	const avatarURL = gravatar.url(email);
+
+	const newUser = await User.create({
+		...req.body,
+		password: hashPassword,
+		avatarURL,
+	});
 
 	res.status(201).json({
 		email: newUser.email,

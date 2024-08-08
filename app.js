@@ -6,6 +6,7 @@ import mongoose from 'mongoose';
 
 import contactsRouter from './routes/contactsRouter.js';
 import authRouter from './routes/authRouter.js';
+import usersRouter from './routes/usersRouter.js';
 import { PATHS } from './routes/paths.js';
 
 const { DB_HOST, PORT } = process.env;
@@ -18,9 +19,11 @@ app.use(morgan('tiny'));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(express.static('public'));
 
 app.use(PATHS.contacts, contactsRouter);
 app.use(PATHS.auth, authRouter);
+app.use(PATHS.users, usersRouter);
 
 app.use((_, res) => {
 	res.status(404).json({ message: 'Route not found' });
