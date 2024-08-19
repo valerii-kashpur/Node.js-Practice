@@ -1,6 +1,8 @@
 import express from 'express';
 import {
 	register,
+	verifyEmail,
+	resendVerifyEmail,
 	login,
 	getCurrent,
 	logout,
@@ -10,6 +12,7 @@ import ctrlWrapper from '../controllers/ctrlWrapper.js';
 
 import {
 	registerSchema,
+	emailSchema,
 	loginSchema,
 	updateSubscriptionSchema,
 } from '../schemas/users.js';
@@ -22,6 +25,14 @@ authRouter.post(
 	'/register',
 	validateBody(registerSchema),
 	ctrlWrapper(register)
+);
+
+authRouter.get('/verify/:verificationToken', ctrlWrapper(verifyEmail));
+
+authRouter.post(
+	'/verify',
+	validateBody(emailSchema),
+	ctrlWrapper(resendVerifyEmail)
 );
 
 authRouter.post('/login', validateBody(loginSchema), ctrlWrapper(login));
